@@ -1,3 +1,5 @@
+#ifndef RAK4631
+
 #include "UDPInterface.h"
 
 #include "../Log.h"
@@ -249,3 +251,5 @@ void UDPInterface::loop() {
 		error("Could not transmit on " + toString() + ". The contained exception was: " + e.what());
 	}
 }
+
+#endif

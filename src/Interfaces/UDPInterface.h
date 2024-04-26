@@ -1,3 +1,5 @@
+#ifndef RAK4631
+
 #pragma once
 
 #include "../Interface.h"
@@ -74,3 +76,5 @@ namespace RNS { namespace Interfaces {
 	};
 
 } }
+
+#endif
