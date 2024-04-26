@@ -7,6 +7,7 @@
 #include "Bytes.h"
 #include "Type.h"
 
+#include <cassert>
 #include <memory>
 #include <string>
 #include <utility>

@@ -3,6 +3,7 @@
 #include "Log.h"
 #include "Type.h"
 
+#include <cassert>
 #include <vector>
 #include <string>
 #include <memory>

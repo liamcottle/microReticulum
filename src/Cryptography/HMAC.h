@@ -5,6 +5,7 @@
 #include <Hash.h>
 #include <SHA256.h>
 #include <SHA512.h>
+#include <cassert>
 #include <stdexcept>
 #include <memory>
 

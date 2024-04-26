@@ -8,6 +8,7 @@
 #include "Cryptography/X25519.h"
 #include "Cryptography/Fernet.h"
 
+#include <cassert>
 #include <map>
 #include <string>
 #include <memory>

@@ -6,6 +6,7 @@
 
 #include <ArduinoJson.h>
 
+#include <cassert>
 #include <list>
 #include <memory>
 #include <stdint.h>
