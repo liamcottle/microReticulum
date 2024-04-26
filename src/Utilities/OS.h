@@ -12,6 +12,11 @@
 #include <Arduino.h>
 #endif
 
+// fix to prevent round macro in nRF5/Arduino.h from breaking RNS::Utilities::OS::round
+#ifdef RAK4631
+#undef round
+#endif
+
 namespace RNS { namespace Utilities {
 
 	class OS {
