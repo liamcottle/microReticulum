@@ -167,6 +167,7 @@ void listDir(const char* dir){
 #elif USE_FS_TYPE == FS_TYPE_INTERNALFS
 
 #include "InternalFileSystem.h"
+#include "littlefs/lfs.h"
 using namespace Adafruit_LittleFS_Namespace;
 
 void listDir(const char* dir){
@@ -184,6 +185,29 @@ void listDir(const char* dir){
   }
 }
 
+static int _countLfsBlock(void *p, lfs_block_t block){
+	lfs_size_t *size = (lfs_size_t*) p;
+	*size += 1;
+	return 0;
+}
+
+static lfs_ssize_t getUsedBlockCount() {
+    lfs_size_t size = 0;
+    lfs_traverse(InternalFS._getFS(), _countLfsBlock, &size);
+    return size;
+}
+
+static int totalBytes() {
+	const lfs_config* config = InternalFS._getFS()->cfg;
+	return config->block_size * config->block_count;
+}
+
+static int usedBytes() {
+	const lfs_config* config = InternalFS._getFS()->cfg;
+	const int usedBlockCount = getUsedBlockCount();
+	return config->block_size * usedBlockCount;
+}
+
 /*static*/ void FileManager::setup() {
 	
 	// init file system (automatically reformats if flash fails to mount)
@@ -192,7 +216,14 @@ void listDir(const char* dir){
 		return;
 	}
 
-	// TODO: log file system stats
+	// log file system stats
+	// apparently only 28kb on rak4631? doesn't seem right, could be wrong...
+	const lfs_config* config = InternalFS._getFS()->cfg;
+	const int usedBlockCount = getUsedBlockCount();
+	uint32_t size = totalBytes() / 1024;
+	uint32_t used = usedBytes() / 1024;
+	info("InternalFS filesystem usage: " + std::to_string(used) + "KB / " + std::to_string(size) + "KB");
+	info("InternalFS filesystem blockSize=" + std::to_string(config->block_size) + " blockCount=" + std::to_string(config->block_count) + " usedBlockCount=" + std::to_string(usedBlockCount));
 	listDir("/");
 
 	// ensure filesystem is writable and format if not
