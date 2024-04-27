@@ -13,11 +13,11 @@
 #include "Type.h"
 #include "Interfaces/UDPInterface.h"
 #include "Interfaces/LoRaInterface.h"
+#include "FileSystem/FileManager.h"
 #include "Utilities/OS.h"
 
 #ifdef ARDUINO
 #include <Arduino.h>
-#include <SPIFFS.h>
 #else
 #include <termios.h>
 #include <fcntl.h>
@@ -38,7 +38,7 @@
 #endif
 
 #define RUN_RETICULUM
-#define UDP_INTERFACE
+// #define UDP_INTERFACE
 //#define UDP2_INTERFACE
 #define LORA_INTERFACE
 //#define RETICULUM_PACKET_TEST
@@ -328,13 +328,9 @@ void setup() {
 	pinMode(BUTTON_PIN, INPUT);
 	attachInterrupt(BUTTON_PIN, userKey, FALLING);  
 
-	// Setup filesystem
-	if (!SPIFFS.begin(true, "")){
-		RNS::error("SPIFFS filesystem mount failed");
-	}
-	else {
-		RNS::debug("SPIFFS filesystem is ready");
-	}
+	// setup filesystem
+	RNS::FileSystem::FileManager::setup();
+
 #endif
 
 	RNS::loglevel(RNS::LOG_EXTREME);
