@@ -3,10 +3,16 @@
 // file system types
 #define FS_TYPE_NONE 0
 #define FS_TYPE_SPIFFS 1
+#define FS_TYPE_INTERNALFS 2
 
 // configure fs type for heltec v3
 #ifdef HELTEC_WIFI_LORA_32_V3
 #define USE_FS_TYPE FS_TYPE_SPIFFS
+#endif
+
+// configure fs type for rak4631
+#ifdef RAK4631
+#define USE_FS_TYPE FS_TYPE_INTERNALFS
 #endif
 
 // set default fs type
