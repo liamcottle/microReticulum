@@ -2,8 +2,14 @@
 
 // file system types
 #define FS_TYPE_NONE 0
+#define FS_TYPE_SPIFFS 1
 
-// set default fs type if none configured
+// configure fs type for heltec v3
+#ifdef HELTEC_WIFI_LORA_32_V3
+#define USE_FS_TYPE FS_TYPE_SPIFFS
+#endif
+
+// set default fs type
 #ifndef USE_FS_TYPE
 #define USE_FS_TYPE FS_TYPE_NONE
 #endif
