@@ -169,6 +169,21 @@ void listDir(const char* dir){
 #include "InternalFileSystem.h"
 using namespace Adafruit_LittleFS_Namespace;
 
+void listDir(const char* dir){
+  Serial.print("DIR: ");
+  Serial.println(dir);
+  File root = InternalFS.open(dir);
+  File file = root.openNextFile();
+  while(file){
+	Serial.print(F("  FILE: "));
+	Serial.print(file.name()); 
+	Serial.print(F(" ("));
+	Serial.print(file.size());
+	Serial.print(F(" bytes)\n"));
+	file = root.openNextFile();
+  }
+}
+
 /*static*/ void FileManager::setup() {
 	
 	// init file system (automatically reformats if flash fails to mount)
@@ -178,6 +193,7 @@ using namespace Adafruit_LittleFS_Namespace;
 	}
 
 	// TODO: log file system stats
+	listDir("/");
 
 	// ensure filesystem is writable and format if not
 	Bytes test;
